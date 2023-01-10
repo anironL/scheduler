@@ -3,8 +3,14 @@ import classNames from "classnames";
 
 import "./InterviewerList.scss";
 
-const interviewer = {
-  id: 1,
-  name: "Sylvia Palmer",
-  avatar: "https://i.imgur.com/LpaY82x.png"
-};
+const interviewers = props.interviewers.map(interviewer => {
+  return (
+    <DayListItem 
+      key={interviewer.id}
+      name={interviewer.name} 
+      avatar={interviewer.avatar} 
+      selected={interviewer.name === props.day}
+      setinterviewer={props.setinterviewer}  
+    />
+  )
+});
