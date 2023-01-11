@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "classnames";
 
 import "./InterviewerListItem.scss";
-import { findByLabelText } from "@testing-library/react";
+// import { findByLabelText } from "@testing-library/react";
 
 const FormatInterviewer = (props) => {
   return (
-    <li className="interviewers__item" onClick={props.setInterviewer}>
-      <img
-        className="interviewers__item-image"
-        src={props.avatar}
-        alt={props.name}
-      />
-      {props.selected && props.name}
-    </li>
+    // <ul> tag to remove nested <li> tags error
+    <ul>
+      <li className="interviewers__item" onClick={props.setInterviewer}>
+        <img
+          className="interviewers__item-image"
+          src={props.avatar}
+          alt={props.name}
+        />
+        {props.selected && props.name}
+      </li>
+    </ul>
   );
 };
 
