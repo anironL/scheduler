@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import  DayList from "./DayList";
+import DayList from "./DayList";
+import Appointment from "components/Appointment/index.js";
 
 import "components/Application.scss";
 
@@ -59,14 +60,21 @@ const appointments = {
     time: "4pm",
   }
 };
-
+const renderAppointments = Object.values(appointments).map(appointment => {
+  return (
+    <Appointment 
+      key={appointment.id} 
+      {...appointment} 
+    />
+  )
+})
 
 export default function Application(props) {
   // The <Application> component should set the default day state to "Monday"
   // The <DayList> component should receive the value represented by the state
   // The <DayList> component should also receive the function that can update the state
   const [day, setDay] = useState("Monday");
-
+  
   return (
     <main className="layout">
       <section className="sidebar">
@@ -90,6 +98,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
+        {renderAppointments}
       </section>
     </main>
   );

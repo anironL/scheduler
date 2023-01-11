@@ -1,6 +1,4 @@
 import React from "react";
-import Show from "./Show";
-import Empty from "./Empty";
 
 export default function Header (props) {
   return (
