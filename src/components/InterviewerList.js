@@ -15,6 +15,7 @@ const interviewers = [
 
 export default function InterviewerList(props){
   // console.log(props.name);
+  const {value, onChange} = props;
   
   const Interviewers = props.interviewers.map(interviewer => {
     return (
@@ -22,8 +23,8 @@ export default function InterviewerList(props){
         key={interviewer.id}
         name={interviewer.name} 
         avatar={interviewer.avatar} 
-        selected={interviewer.id === props.interviewer}
-        setInterviewer={() => props.setInterviewer(interviewer.id)}
+        selected={interviewer.id === value}
+        setInterviewer={() => onChange(interviewer.id)}
       />
     )
   });
