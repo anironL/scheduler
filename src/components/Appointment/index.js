@@ -1,16 +1,25 @@
 import React from "react";
 
 import Header from "./Header";
-// import Empty from "./Empty";
-// import Show from "./Show";
+import Empty from "./Empty";
+import Show from "./Show";
 
 import "./styles.scss";
 
-export default function Application (props) {
+export default function Appointment (props) {
   return (
     <article className="appointment">
       <Header time={props.time} interview={props.interview} />
-      <p> Is this functioning? </p>
+      {props.interview ? 
+        <Show 
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onEdit={props.onEdit}
+          onDelete={props.onDelete}
+        />
+        : 
+        <Empty onAdd={props.onAdd}/>}
+      <hr className="appointment__separator" />
     </article>
   )
 }
