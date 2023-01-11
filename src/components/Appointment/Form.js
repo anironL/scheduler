@@ -21,9 +21,8 @@ export default function Form (props) {
           />
         </form>
         <InterviewerList 
-          key={props.interviewers[0].id}
-          name={props.interviewers[0].name} 
-          avatar={props.interviewers[0].avatar}
+          interviewers={props.interviewers}
+          value={props.interviewer}
         />
       </section>
       <section className="appointment__card-right">
