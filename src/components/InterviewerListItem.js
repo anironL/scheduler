@@ -6,9 +6,8 @@ import { findByLabelText } from "@testing-library/react";
 
 const FormatInterviewer = (props) => {
   return (
-    <li className="interviewers__item">
+    <li className="interviewers__item" onClick={props.setInterviewer}>
       <img
-        id={props.id}
         className="interviewers__item-image"
         src={props.avatar}
         alt={props.name}
@@ -25,7 +24,7 @@ export default function InterviewerListItem(props) {
   })
 
   return (
-    <li onClick={() => props.setInterviewer(props.name)} className={interviewerClass}>
+    <li onClick={props.setInterviewer} className={interviewerClass}>
       <FormatInterviewer id={props.id} avatar={props.avatar} name={props.name} selected={props.selected} />
     </li>
   );
