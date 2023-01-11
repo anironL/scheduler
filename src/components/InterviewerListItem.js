@@ -2,16 +2,31 @@ import React, { useState } from "react";
 import classNames from "classnames";
 
 import "./InterviewerListItem.scss";
+import { findByLabelText } from "@testing-library/react";
 
-export default function InterviewerListItem(props) {
+const FormatInterviewer = (props) => {
   return (
     <li className="interviewers__item">
       <img
+        id={props.id}
         className="interviewers__item-image"
         src={props.avatar}
         alt={props.name}
       />
-      {props.name}
+      {props.selected && props.name}
+    </li>
+  );
+};
+
+export default function InterviewerListItem(props) {
+  let interviewerClass = classNames ({
+    "interviewers__item": true,
+    "interviewers__item--selected": props.selected,
+  })
+
+  return (
+    <li onClick={() => props.setInterviewer(props.name)} className={interviewerClass}>
+      <FormatInterviewer id={props.id} avatar={props.avatar} name={props.name} selected={props.selected} />
     </li>
   );
 };
