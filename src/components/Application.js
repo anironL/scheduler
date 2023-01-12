@@ -54,17 +54,22 @@ const renderAppointments = Object.values(appointments).map(appointment => {
 })
 
 export default function Application(props) {
-  // The <Application> component should set the default day state to "Monday"
-  // The <DayList> component should receive the value represented by the state
-  // The <DayList> component should also receive the function that can update the state
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    // appointments: {}
+  });
+  // const [day, setDay] = useState('Monday');
+  // const [days, setDays] = useState([]); 
+  
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     axios.get("/api/days")
     .then (response => {
-      console.log(response)
-      setDays([...response.data])
+      setDays(response.data)
     })
     .catch (err => {console.log(err)})
   }, [])
@@ -80,9 +85,10 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            value={day} 
-            onChange={setDay} 
+            days={state.days}
+            day={state.day}
+            setDays={setDays} 
+            onChange={setDay}
           />
         </nav>
         <img
