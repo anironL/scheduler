@@ -60,9 +60,7 @@ export default function Application(props) {
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
     // appointments: {}
   });
-  // const [day, setDay] = useState('Monday');
-  // const [days, setDays] = useState([]); 
-  
+
   const setDay = day => setState({ ...state, day });
   const setDays = days => setState(prev => ({ ...prev, days }));
 
@@ -87,7 +85,6 @@ export default function Application(props) {
           <DayList
             days={state.days}
             day={state.day}
-            // setDays={setDays} 
             onChange={setDay}
           />
         </nav>
