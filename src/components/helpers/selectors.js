@@ -12,8 +12,8 @@ export function getAppointmentsForDay(state, day) {
 }
 
 // pass in state and appointment.interview[#]
-export function getInterview(state, appointment) {
-  if (appointment === null) {
+export function getInterview(state, interview) {
+  if (interview === null) {
     return null;
   }
 
@@ -33,13 +33,11 @@ export function getInterview(state, appointment) {
   // Object.values(state.interviewers).map(interviewerNum => state.interviewers[interviewerNum]);
   // console.log("Array:", interviewersArray)
 
-  const interviewerInfo = Object.values(state.interviewers).find(element => element.id === appointment.interviewer)
+  // const interviewerInfo = Object.values(state.interview).find(e => e.id === interview.interviewer)
   // console.log(interviewerInfo)
 
   return {
-    student:appointment.student,
-    interviewer:interviewerInfo,
+    student:interview.student,
+    interviewer:state.interviewers[interview.interviewer],
   }
-  // setState = (prev => ({...prev, appointments:interviewerInfo}));
-  // return state;
 }
