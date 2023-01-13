@@ -4,8 +4,6 @@ import Button from "../Button";
 
 import "./styles.scss";
 
-
-
 export default function Form (props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
@@ -24,6 +22,8 @@ export default function Form (props) {
     reset();
   }
 
+  console.log(props)
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -39,6 +39,7 @@ export default function Form (props) {
         </form>
         {/* <p>setStudent onChange: {student}</p> */}
         <InterviewerList 
+          // key={props.interviewers.id}
           interviewers={props.interviewers}
           value={interviewer} 
           onChange={setInterviewer}
