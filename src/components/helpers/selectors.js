@@ -16,26 +16,7 @@ export function getInterview(state, interview) {
   if (interview === null) {
     return null;
   }
-
-  // state = array from setState [ day, days {} , appointments {}, and interviewers {}]
-  // console.log("State object:", state.interviewers)
-  
-  // appointment = object {id: #key, interviewer: #interviewerID, student: "name"}
-  // console.log("Appointment object:", appointment)
-
-  // locate interviewer number from appointment
-  // console.log("Interviewer number from appointment:", appointment.interview.interviewer)
-  // const interviewerNum = appointment.interviewer;
-
-  // map interviewers from state
-  // const interviewersArray = Object.values(state.interviewers)
-  
-  // Object.values(state.interviewers).map(interviewerNum => state.interviewers[interviewerNum]);
-  // console.log("Array:", interviewersArray)
-
-  // const interviewerInfo = Object.values(state.interview).find(e => e.id === interview.interviewer)
-  // console.log(interviewerInfo)
-
+ 
   return {
     student:interview.student,
     interviewer:state.interviewers[interview.interviewer],
