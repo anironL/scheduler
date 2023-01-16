@@ -15,6 +15,7 @@ export default function Appointment (props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW"; 
   const CREATE = "CREATE";
+  const EDIT = "EDIT";
   const SAVING = "SAVING";
   const CANCELLING = "CANCELLING";
   const REMOVING = "REMOVING";
@@ -35,7 +36,7 @@ export default function Appointment (props) {
  }  
 
  function remove() {
-  const interview = "";
+  const interview = null;
 
   transition(REMOVING);
   props.cancelInterview(props.id, interview)
@@ -55,7 +56,7 @@ export default function Appointment (props) {
         <Show 
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onEdit={props.onEdit}
+          onEdit={() => transition(EDIT)}
           onDelete={() => transition(CANCELLING)}
         />)}
       {mode === CREATE && (
@@ -63,6 +64,14 @@ export default function Appointment (props) {
           student={props.interview ? props.interview.student.name : "Me"}
           interviewers={props.interviewers}
           onCancel={() => transition(EMPTY)}
+          onSave={save}
+          bookInterview={props.bookInterview}
+        />)}
+      {mode === EDIT && (
+        <Form 
+          student={props.interview ? props.interview.student.name : "Me"}
+          interviewers={props.interviewers}
+          onCancel={() => transition(SHOW)}
           onSave={save}
           bookInterview={props.bookInterview}
         />)}
