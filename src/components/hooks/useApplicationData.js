@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
-import DayList from "./DayList";
-import Appointment from "components/Appointment/index.js";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "components/helpers/selectors.js";
 
 // The state object will maintain the same structure.
 // The setDay action can be used to set the current day.
@@ -17,6 +13,24 @@ export default function useApplicationData() {
     appointments: {},
     interviewers: {}
   });
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers")
+    ])
+    .then((all) => {
+      // console.log("promise days:", all[0].data);
+      // console.log("promise appointments:", all[1].data);
+      // console.log("promise interviewers:", all[2].data);
+      setState(prev => ({...prev, 
+        days: all[0].data, 
+        appointments: all[1].data,
+        interviewers: all[2].data
+      }));
+    })
+  }, [])
 
   const setDay = day => setState({ ...state, day });
 
@@ -56,5 +70,7 @@ export default function useApplicationData() {
       });   
     })
   }
+
+  return { state, setDay, bookInterview, cancelInterview }
 };
 
