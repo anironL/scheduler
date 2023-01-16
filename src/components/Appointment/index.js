@@ -4,6 +4,8 @@ import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
 import Form from "./Form";
+import Status from "./Status";
+import Confirm from "./Confirm";
 import useVisualMode from "../hooks/useVisualMode";
 
 import "./styles.scss";
@@ -13,6 +15,9 @@ export default function Appointment (props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW"; 
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
+  const CANCELLING = "CANCELLING";
+  const REMOVING = "REMOVING";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -23,8 +28,19 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    console.log("save interview object", interview)
-  }  
+    // console.log("save interview object", interview)
+    transition(SAVING);
+    props.bookInterview(props.id, interview)
+    .then ((res) => transition(SHOW))
+ }  
+
+ function remove() {
+  const interview = "";
+
+  transition(REMOVING);
+  props.cancelInterview(props.id, interview)
+  .then ((res) => transition(EMPTY))
+ }
 
   console.log("Index", props)
 
@@ -40,7 +56,7 @@ export default function Appointment (props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onEdit={props.onEdit}
-          onDelete={props.onDelete}
+          onDelete={() => transition(CANCELLING)}
         />)}
       {mode === CREATE && (
         <Form 
@@ -49,8 +65,17 @@ export default function Appointment (props) {
           onCancel={() => transition(EMPTY)}
           onSave={save}
           bookInterview={props.bookInterview}
+        />)}
+      {mode === SAVING && (<Status message="Saving" />)}
+      {mode === CANCELLING && (
+        <Confirm 
+          message={"Are you sure you would like to delete?"}
+          onCancel={() => transition(SHOW)}
+          onConfirm={remove}
         />
       )}
+      {mode === REMOVING && (<Status message="Deleting" />)}
+  
       <hr className="appointment__separator" />
     </article>
   )
