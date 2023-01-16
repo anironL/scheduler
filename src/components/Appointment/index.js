@@ -18,7 +18,15 @@ export default function Appointment (props) {
     props.interview ? SHOW : EMPTY
   );
 
-  // console.log("Index", props)
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    console.log("save interview object", interview)
+  }  
+
+  console.log("Index", props)
 
   return (
     <article className="appointment">
@@ -38,8 +46,9 @@ export default function Appointment (props) {
         <Form 
           student={props.interview ? props.interview.student.name : "Me"}
           interviewers={props.interviewers}
-          onSave={() => console.log(props.bookInterview)}
           onCancel={() => transition(EMPTY)}
+          onSave={save}
+          bookInterview={props.bookInterview}
         />
       )}
       <hr className="appointment__separator" />
