@@ -31,6 +31,18 @@ export default function Application(props) {
       />
     )
   })
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+  }  
+  
   const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
@@ -65,6 +77,8 @@ export default function Application(props) {
             days={state.days}
             day={state.day}
             onChange={setDay}
+            bookInterview={bookInterview}
+            onSave={save}
           />
         </nav>
         <img
