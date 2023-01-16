@@ -16,8 +16,10 @@ export default function Appointment (props) {
   const CREATE = "CREATE";
   const EDIT = "EDIT";
   const SAVING = "SAVING";
+  const ERROR_SAVE = "ERROR_SAVE";
   const CANCELLING = "CANCELLING";
   const REMOVING = "REMOVING";
+  
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -28,10 +30,12 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    // console.log("save interview object", interview)
+
     transition(SAVING);
+
     props.bookInterview(props.id, interview)
     .then ((res) => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
  }  
 
  function remove() {
@@ -42,7 +46,7 @@ export default function Appointment (props) {
   .then ((res) => transition(EMPTY))
  }
 
-  console.log("Index", props)
+  // console.log("Index", props)
 
   return (
     <article className="appointment">
