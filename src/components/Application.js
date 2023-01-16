@@ -15,9 +15,8 @@ export default function Application(props) {
     interviewers: {}
   });
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const dailyInterviewers = getInterviewersForDay(state, state.day);
-  
+  const setDay = day => setState({ ...state, day });
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -34,9 +33,6 @@ export default function Application(props) {
         ...state,
         appointments
       });   
-    })
-    .catch((error) => {
-      console.log(error)
     })
   }
 
@@ -56,11 +52,10 @@ export default function Application(props) {
         appointments
       });   
     })
-    .catch((error) => {
-      console.log(error)
-    })
   }
   
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
   const renderAppointments = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
 
@@ -76,8 +71,6 @@ export default function Application(props) {
       />
     )
   })
-
-  const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
     Promise.all([
