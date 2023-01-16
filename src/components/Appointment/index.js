@@ -1,11 +1,13 @@
 import React from "react";
 
-import Header from "./Header";
-import Empty from "./Empty";
-import Show from "./Show";
-import Form from "./Form";
-import Status from "./Status";
 import Confirm from "./Confirm";
+import Empty from "./Empty";
+import Error from "./Error";
+import Form from "./Form";
+import Header from "./Header";
+import Show from "./Show";
+import Status from "./Status";
+
 import useVisualMode from "../hooks/useVisualMode";
 
 import "./styles.scss";
@@ -19,6 +21,7 @@ export default function Appointment (props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const CANCELLING = "CANCELLING";
   const REMOVING = "REMOVING";
+  const ERROR_DELETE = "ERROR_DELETE";
   
 
   const { mode, transition, back } = useVisualMode(
@@ -35,15 +38,17 @@ export default function Appointment (props) {
 
     props.bookInterview(props.id, interview)
     .then ((res) => transition(SHOW))
-    .catch(error => transition(ERROR_SAVE, true));
+    .catch((err) => transition(ERROR_SAVE, true));
  }  
 
  function remove() {
   const interview = null;
 
-  transition(REMOVING);
+  transition(REMOVING, true);
+
   props.cancelInterview(props.id, interview)
   .then ((res) => transition(EMPTY))
+  .catch((err) => transition(ERROR_DELETE, true));
  }
 
   // console.log("Index", props)
@@ -79,6 +84,11 @@ export default function Appointment (props) {
           bookInterview={props.bookInterview}
         />)}
       {mode === SAVING && (<Status message="Saving" />)}
+      {mode === ERROR_SAVE && (
+        <Error 
+          message="Error saving" 
+          onClick={() => back()} 
+        />)}
       {mode === CANCELLING && (
         <Confirm 
           message={"Are you sure you would like to delete?"}
@@ -87,6 +97,11 @@ export default function Appointment (props) {
         />
       )}
       {mode === REMOVING && (<Status message="Deleting" />)}
+      {mode === ERROR_DELETE && (
+        <Error 
+          message="Error deleting" 
+          onClick={() => back()} 
+        />)}
   
       <hr className="appointment__separator" />
     </article>
