@@ -38,7 +38,7 @@ export default function Appointment (props) {
         <Form 
           student={props.interview ? props.interview.student.name : "Me"}
           interviewers={props.interviewers}
-          onSave={() => console.log("This doesn't work yet")}
+          onSave={() => console.log(props.bookInterview)}
           onCancel={() => transition(EMPTY)}
         />
       )}

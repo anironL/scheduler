@@ -41,6 +41,7 @@ export default function Application(props) {
       student: name,
       interviewer
     };
+    console.log(bookInterview(id, interviewer))
   }  
   
   const setDay = day => setState({ ...state, day });
@@ -77,8 +78,8 @@ export default function Application(props) {
             days={state.days}
             day={state.day}
             onChange={setDay}
-            bookInterview={bookInterview}
             onSave={save}
+            bookInterview={bookInterview}
           />
         </nav>
         <img
