@@ -6,6 +6,7 @@ import {
   waitForElement, 
   fireEvent, 
   getByText, 
+  queryByText,
   getByAltText,
   getByPlaceholderText,
   prettyDOM,
@@ -62,12 +63,16 @@ describe("Application", () => {
     // Check that the element with the text "Saving" is displayed.
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
     
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     // Wait until the element with the text "Lydia Miller-Jones" is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     // console.log(prettyDOM(appointment));
 
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      // queryByText(day, "Monday")
+      getByText(day, "Monday")
+    );
+    // console.log(prettyDOM(day));
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   })
-
-
 });
