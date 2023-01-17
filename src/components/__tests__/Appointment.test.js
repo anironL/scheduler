@@ -1,13 +1,14 @@
 /*We are rendering `<Application />` down below, so we need React.createElement*/
 import React from "react";
-import Appointment from "../Appointment/index.js"
-
 /*We import our helper functions from the react-testing-library
   The render function allows us to render Components*/
-import { render } from "@testing-library/react";
-
-/*We import the component that we are testing*/
+import { render, cleanup } from "@testing-library/react";
+/*We import the components that we are testing*/
+import Appointment from "../Appointment/index.js"
+import Form from "components/Appointment/Form";
 import Application from "components/Application";
+
+afterEach(cleanup);
 
 /*A test that renders a React Component*/
 describe("Appointment", () => {
@@ -15,6 +16,32 @@ describe("Appointment", () => {
     render(<Appointment />);
   });
 });
+
+describe("Form", () => {
+  const interviewers = [
+    {
+      id: 1,
+      student: "Sylvia Palmer",
+      avatar: "https://i.imgur.com/LpaY82x.png"
+    }
+  ];
+
+  it("renders without student name if not provided", () => {
+    expect(getByPlaceholderText("Enter Student Name")).toHaveValue("");
+  });
+
+  it("renders with initial student name", () => {
+    expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
+  });
+});
+
+
+
+
+
+
+
+// Additional Notes
 
 // the same code (both are interchangable)
 // it("does something it is supposed to do", () => {
