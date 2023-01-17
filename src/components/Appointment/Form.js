@@ -39,7 +39,7 @@ export default function Form (props) {
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
-            value={name}
+            value={student}
             type="text"
             placeholder="Enter Student Name"
             onChange={event => {
