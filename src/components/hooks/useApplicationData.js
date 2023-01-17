@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import { getAppointmentsForDay } from "../helpers/selectors.js"
+
 // The state object will maintain the same structure.
 // The setDay action can be used to set the current day.
 // The bookInterview action makes an HTTP request and updates the local state.
@@ -22,7 +24,7 @@ export default function useApplicationData() {
     ])
     .then((all) => {
       // console.log("promise days:", all[0].data);
-      // console.log("promise appointments:", all[1].data);
+      console.log("promise appointments:", all[1].data);
       // console.log("promise interviewers:", all[2].data);
       setState(prev => ({...prev, 
         days: all[0].data, 
@@ -43,17 +45,18 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     }; 
+    const days = updateSpots(id, appointments);
     return axios.put(`/api/appointments/${id}`, appointment)
     .then((response) => {
-      console.log("Appointment booked:", response)
       setState({
         ...state,
-        appointments
-      });   
+        appointments,
+        days
+    });   
     })
   }
 
-  function cancelInterview(id, interview) {
+  function cancelInterview(id, interview) {  
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -62,15 +65,37 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     }; 
+    const days = updateSpots(id, appointments);
     return axios.delete(`/api/appointments/${id}`)
     .then((res) => {
       setState({
         ...state,
-        appointments
-      });   
+        appointments,
+        days
+      })   
     })
   }
 
-  return { state, setDay, bookInterview, cancelInterview }
+  function updateSpots(apptID, appointments) {  
+    let newDays = [...state.days];
+    let dayID = newDays.findIndex(id => id.appointments.includes(apptID))   
+    let nullCounter = 0;
+
+    for (let x of newDays[dayID].appointments) {
+      if (appointments[x].interview === null) {
+        nullCounter++
+      }
+    }
+
+    const dayObject = {
+      ...newDays[dayID],
+      spots:nullCounter
+    }; 
+    
+    newDays[dayID] = dayObject;
+    return newDays
+  }
+
+  return { state, setDay, bookInterview, cancelInterview, updateSpots }
 };
 
