@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types';
 
 import { render, cleanup } from "@testing-library/react";
-// import onSave from "../Appointment/Form.js";
+import { fireEvent } from "@testing-library/react";
+
 import '@testing-library/jest-dom'
 
 import Form from "../Appointment/Form.js";
@@ -35,31 +35,51 @@ describe("Form", () => {
     expect(getByTestId("student-name-input")).toHaveValue("Lydia Miller-Jones");
   });
 
-  // it("validates that the student name is not blank", () => {
-//   const { getByText } = render ( <Form />)
-//   /* 1. validation is shown */
-//   expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
+    it("validates that the student name is not blank", () => {
+    /* 1. Create the mock onSave function */
+    const onSave = jest.fn();
 
-//   /* 2. onSave is not called */
-//   expect(onSave).not.toHaveBeenCalled();
-// });
+    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
+    const { getByText } = render(
+      <Form interviewers={interviewers} onSave={onSave} />
+    );
 
-// it("validates that the interviewer cannot be null", () => {
-//   const { getByText } = render ( <Form />)
-//   /* 3. validation is shown */
-//   expect(getByText(/please select an interviewer/i)).toBeInTheDocument();
+    /* 3. Click the save button */
+    fireEvent.click(getByText("Save"));
 
-//   /* 4. onSave is not called */
-//   expect(onSave).not.toHaveBeenCalled();
-// });
+    expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it("validates that the interviewer cannot be null", () => {
+    /* 1. Create the mock onSave function */
+    const onSave = jest.fn();
+
+    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
+    const { getByText } = render(
+      <Form interviewers={interviewers} onSave={onSave} name="Lydia Miller-Jones" />
+    );
+
+    /* 3. Click the save button */
+    fireEvent.click(getByText("Save"));
+
+    expect(getByText(/please select an interviewer/i)).toBeInTheDocument();
+    expect(onSave).not.toHaveBeenCalled();
+  });
 
   it("calls onSave function when the name is defined", () => {
-    const { queryByText } = render (<Form 
-      interviewers={interviewers} 
-      student="Lydia Miller-Jones"
-    />)
-    
     const onSave = jest.fn()
+
+    const { getByText, queryByText } = render(
+      <Form
+        interviewers={interviewers}
+        onSave={onSave}
+        student="Lydia Miller-Jones"
+        interviewer={interviewers[0].id}
+      />
+    ); 
+    
+    fireEvent.click(getByText("Save"));
 
     /* 5. validation is not shown */
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
