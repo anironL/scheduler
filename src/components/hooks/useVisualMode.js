@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+// Custom hook handles mode change logic and tracking for Appointment booking
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
+// Change mode and add to history log
   const transition = (newMode, replace = false) => {
     if (replace === true) {
       history[history.length-1] = newMode
@@ -13,9 +15,9 @@ export default function useVisualMode(initial) {
       setHistory(prev => [...prev, newMode])
     }
     setMode(newMode)
-    // console.log("state", history)
   };
 
+// Move back 2 spaces in history state; used when cancelling from Error.js  
   const back = () => {
     if (history.length < 3) {
       setMode(history[0])
@@ -26,7 +28,6 @@ export default function useVisualMode(initial) {
         return prevHistory    
       })
     } 
-    // console.log("state", history)
   }
 
   return { mode, transition, back };

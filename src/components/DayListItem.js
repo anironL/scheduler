@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 import "./DayListItem.scss";
 
+// Display different h3 text depending on props.spots
 const FormatSpots = (props) => {
   return (
     <>

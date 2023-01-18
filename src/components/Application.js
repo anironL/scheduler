@@ -1,5 +1,5 @@
 import React from "react";
-// import axios from "axios";
+// Axios get/put requests are handled in hooks/useApplicationData.js
 
 import DayList from "./DayList";
 import Appointment from "components/Appointment/index.js";
@@ -11,8 +11,7 @@ import "components/Application.scss";
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day);
-   
+  const interviewers = getInterviewersForDay(state, state.day); 
   const appointments = getAppointmentsForDay(state, state.day).map(
     appointment => {
       return (

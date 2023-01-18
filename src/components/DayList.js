@@ -1,9 +1,8 @@
 import React from "react";
-// import classNames from "classnames";
 import DayListItem from "./DayListItem"
 
+// Render days on sidebar
 export default function DayList(props){
-  // console.log(props);
   const days = props.days.map(day => {
     return (
       <DayListItem 

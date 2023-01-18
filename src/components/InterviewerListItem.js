@@ -2,7 +2,6 @@ import React from "react";
 import classNames from "classnames";
 
 import "./InterviewerListItem.scss";
-// import { findByLabelText } from "@testing-library/react";
 
 const FormatInterviewer = (props) => {
   return (

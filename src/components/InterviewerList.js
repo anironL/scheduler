@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 
 import "./InterviewerList.scss";
 
-// from stories
 export default function InterviewerList(props){
-  // console.log(props.name);
   const {value, onChange} = props;
 
-  
+// Render interviewers in Form
   const Interviewers = props.interviewers.map(interviewer => {
     return (
       <InterviewerListItem 

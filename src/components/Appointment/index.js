@@ -13,6 +13,7 @@ import useVisualMode from "../hooks/useVisualMode";
 import "./styles.scss";
 
 export default function Appointment (props) {
+// Display modes for appointment booking 
   const EMPTY = "EMPTY";
   const SHOW = "SHOW"; 
   const CREATE = "CREATE";
@@ -23,11 +24,12 @@ export default function Appointment (props) {
   const REMOVING = "REMOVING";
   const ERROR_DELETE = "ERROR_DELETE";
   
-
+// Import useVisualMode custom hook
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+// Create interview object
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -41,6 +43,7 @@ export default function Appointment (props) {
     .catch((err) => transition(ERROR_SAVE, true));
  }  
 
+// Remove interview object
  function remove() {
   const interview = null;
 
@@ -50,8 +53,6 @@ export default function Appointment (props) {
   .then ((res) => transition(EMPTY))
   .catch((err) => transition(ERROR_DELETE, true));
  }
-
-  // console.log("Index", props)
 
   return (
     <article className="appointment" data-testid="appointment">
