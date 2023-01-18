@@ -1,23 +1,19 @@
 import React from "react";
-import DayListItem from "./DayListItem"
+import DayListItem from "./DayListItem";
 
 // Render days on sidebar
-export default function DayList(props){
-  const days = props.days.map(day => {
+export default function DayList(props) {
+  const days = props.days.map((day) => {
     return (
-      <DayListItem 
+      <DayListItem
         key={day.id}
-        name={day.name} 
-        spots={day.spots} 
+        name={day.name}
+        spots={day.spots}
         selected={day.name === props.day}
-        setDay={props.onChange}  
+        setDay={props.onChange}
       />
-    )
+    );
   });
 
-  return(
-    <ul>
-      {days}
-    </ul>
-  )
+  return <ul>{days}</ul>;
 }

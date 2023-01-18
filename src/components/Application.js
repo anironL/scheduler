@@ -3,45 +3,48 @@ import React from "react";
 
 import DayList from "./DayList";
 import Appointment from "components/Appointment/index.js";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "components/helpers/selectors.js";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "components/helpers/selectors.js";
 import useApplicationData from "components/hooks/useApplicationData.js";
 
 import "components/Application.scss";
 
 export default function Application(props) {
-  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
+  // Import useApplicationData custom hook
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day); 
+  const interviewers = getInterviewersForDay(state, state.day);
   const appointments = getAppointmentsForDay(state, state.day).map(
-    appointment => {
+    (appointment) => {
       return (
-      <Appointment 
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={getInterview(state, appointment.interview)}
-        interviewers ={interviewers}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />
-    )
-  })
+        <Appointment
+          key={appointment.id}
+          id={appointment.id}
+          time={appointment.time}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={interviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      );
+    }
+  );
 
   return (
     <main className="layout">
       <section className="sidebar">
         <img
-        className="sidebar--centered"
-        src="images/logo.png"
-        alt="Interview Scheduler"
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            days={state.days}
-            day={state.day}
-            onChange={setDay}
-          />
+          <DayList days={state.days} day={state.day} onChange={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -57,4 +60,3 @@ export default function Application(props) {
     </main>
   );
 }
-

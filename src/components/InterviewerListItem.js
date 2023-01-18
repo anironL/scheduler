@@ -20,14 +20,19 @@ const FormatInterviewer = (props) => {
 };
 
 export default function InterviewerListItem(props) {
-  let interviewerClass = classNames ({
-    "interviewers__item": true,
+  let interviewerClass = classNames({
+    interviewers__item: true,
     "interviewers__item--selected": props.selected,
-  })
+  });
 
   return (
     <li onClick={props.setInterviewer} className={interviewerClass}>
-      <FormatInterviewer id={props.id} avatar={props.avatar} name={props.name} selected={props.selected} />
+      <FormatInterviewer
+        id={props.id}
+        avatar={props.avatar}
+        name={props.name}
+        selected={props.selected}
+      />
     </li>
   );
-};
+}

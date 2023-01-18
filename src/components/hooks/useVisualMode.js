@@ -5,30 +5,30 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
-// Change mode and add to history log
+  // Change mode and add to history log
   const transition = (newMode, replace = false) => {
     if (replace === true) {
-      history[history.length-1] = newMode
-      setHistory(history)
-    } 
-    if (replace === false) {
-      setHistory(prev => [...prev, newMode])
+      history[history.length - 1] = newMode;
+      setHistory(history);
     }
-    setMode(newMode)
+    if (replace === false) {
+      setHistory((prev) => [...prev, newMode]);
+    }
+    setMode(newMode);
   };
 
-// Move back 2 spaces in history state; used when cancelling from Error.js  
+  // Move back 2 spaces in history state; used when cancelling from Error.js
   const back = () => {
     if (history.length < 3) {
-      setMode(history[0])
+      setMode(history[0]);
     } else {
-      setMode(history[history.length - 2])
-      setHistory(prevHistory => { 
-        prevHistory.pop()
-        return prevHistory    
-      })
-    } 
-  }
+      setMode(history[history.length - 2]);
+      setHistory((prevHistory) => {
+        prevHistory.pop();
+        return prevHistory;
+      });
+    }
+  };
 
   return { mode, transition, back };
-};
+}
