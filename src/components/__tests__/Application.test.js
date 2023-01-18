@@ -37,36 +37,25 @@ describe("Application", () => {
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     // Render the Application.
     const { container, debug } = render(<Application />);
-    
     // Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
-    // console.log(prettyDOM(container));
-    
-    const appointment = getAllByTestId(container, "appointment")[0];
-    
+
     // Click the "Add" button on the first empty appointment.
+    const appointment = getAllByTestId(container, "appointment")[0];
     fireEvent.click(getByAltText(appointment, "Add"));
-    
     // Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
     fireEvent.change(getByPlaceholderText(appointment, "Enter Student Name"), {
       target: { value: "Lydia Miller-Jones" }
     });
-    
     // Click the first interviewer in the list.
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
-    
     // Click the "Save" button on that same appointment.
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"))
-    
     fireEvent.click(getByText(appointment, "Save"));
-    
     // Check that the element with the text "Saving" is displayed.
-    expect(getByText(appointment, "Saving")).toBeInTheDocument();
-    
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();    
     // Wait until the element with the text "Lydia Miller-Jones" is displayed.
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-    // console.log(prettyDOM(appointment));
-
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
     const day = getAllByTestId(container, "day").find(day =>
       // queryByText(day, "Monday")
@@ -74,5 +63,63 @@ describe("Application", () => {
     );
     // console.log(prettyDOM(day));
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+  })
+
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // Render the Application.
+    const { container, debug } = render(<Application />);
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Locate the first appointment (Archie Cohen)
+    const appointment = getAllByTestId(container,"appointment")[1];
+    // Click the "Delete button" for this appointment
+    fireEvent.click(getByAltText(appointment, "Delete"))
+    // Check for confirmation state
+    expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
+    // Click confirm from confirmation
+    fireEvent.click(getByText((container),"Confirm"))
+    // Check to see if state has changed to Deleting (element text: "Deleting")
+    expect(getByText(container, "Deleting")).toBeInTheDocument();
+    // Wait until the element with the "Add" button is displayed.
+    await waitForElement(() => getByAltText(appointment, "Add"));
+    // Check that DayListItem has incremented spots from 1 to to 2
+    const day = getAllByTestId(container, "day").find(day =>
+      getByText(day, "Monday")
+    );
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+    // debug();
+  })
+
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // Render the Application.
+    const { container, debug } = render(<Application />);
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    // Locate the first appointment (Archie Cohen)
+    const appointment = getAllByTestId(container,"appointment")[1];
+    // Click the "Edit button" for this appointment
+    fireEvent.click(getByAltText(appointment, "Edit"))
+    // Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+    fireEvent.change(getByPlaceholderText(appointment, "Enter Student Name"), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+    // Click the first interviewer in the list.
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    // Click the "Save" button on that same appointment.
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"))
+    fireEvent.click(getByText(appointment, "Save"));
+    // Check that the element with the text "Saving" is displayed.
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();    
+    // Wait until the element with the text "Lydia Miller-Jones" is displayed.
+    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+    // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+    const day = getAllByTestId(container, "day").find(day =>
+      // queryByText(day, "Monday")
+      getByText(day, "Monday")
+    );
+    // console.log(prettyDOM(day));
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    // // debug();
   })
 });
