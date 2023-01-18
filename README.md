@@ -24,4 +24,9 @@ npm run storybook
 
 ## Hello World
 
+Book appointments
 <img src="https://github.com/anironL/scheduler/blob/master/docs/bookAppointment.gif" />
+
+Edit and cancel appointments
+<img src="https://github.com/anironL/scheduler/blob/master/docs/editAppointment.gif" />
+<img src="https://github.com/anironL/scheduler/blob/master/docs/cancelAppointment.gif" />
