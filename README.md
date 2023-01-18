@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Hello World
+
+<img src="https://github.com/anironL/scheduler/blob/master/docs/bookAppointment.gif" />
