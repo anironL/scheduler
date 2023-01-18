@@ -36,7 +36,7 @@ export default function Form (props) {
     props.onSave(student, interviewer);
   }
   
-  console.log("Form", props)
+  // console.log("Form", props)
 
   return (
     <main className="appointment__card appointment__card--create">

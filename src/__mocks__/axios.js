@@ -98,6 +98,8 @@ export default {
       data: null
     })
   })
+
+  // jest.fn().mockImplementation(() => Promise.reject(value));
 };
 
 
