@@ -15,21 +15,3 @@ describe("Appointment", () => {
     render(<Appointment />);
   });
 });
-
-// the same code (both are interchangable)
-// it("does something it is supposed to do", () => {
-//   // test code here...
-// });
-// test("does something it is supposed to do", () => {
-//   // test code here...
-// });
-
-// // skip test (for above notation)
-// xit("does something it is supposed to do", () => {
-//   // ...
-// });
-// // or if using test
-// test.skip("does something it is supposed to do", () => {
-//   // ...
-// });
-

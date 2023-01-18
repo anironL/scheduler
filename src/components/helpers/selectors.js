@@ -1,3 +1,4 @@
+// Return array of appointmentIds for the provided day. 
 export function getAppointmentsForDay(state, day) {
   if (state.days.length === 0) {
     return [];
@@ -9,7 +10,7 @@ export function getAppointmentsForDay(state, day) {
   return findDay.appointments.map(appointmentId => state.appointments[appointmentId])
 }
 
-// pass in state and appointment.interview[#]
+// Return interview object for the provided interviewId
 export function getInterview(state, interview) {
   if (interview === null) {
     return null;
@@ -21,6 +22,7 @@ export function getInterview(state, interview) {
   }
 }
 
+// Return array of interviewerIds for the provided day. 
 export function getInterviewersForDay(state, day) {
   if (day === null) {
     return [];

@@ -6,10 +6,8 @@ import {
   waitForElement, 
   fireEvent, 
   getByText, 
-  queryByText,
   getByAltText,
   getByPlaceholderText,
-  prettyDOM,
   getAllByTestId 
 } 
 from "@testing-library/react";
@@ -59,7 +57,6 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
     const day = getAllByTestId(container, "day").find(day =>
-      // queryByText(day, "Monday")
       getByText(day, "Monday")
     );
     // console.log(prettyDOM(day));
@@ -93,7 +90,7 @@ describe("Application", () => {
   })
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
-// Render the Application.
+    // Render the Application.
     const { container, debug } = render(<Application />);
     // Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -116,7 +113,6 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     // Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
     const day = getAllByTestId(container, "day").find(day =>
-      // queryByText(day, "Monday")
       getByText(day, "Monday")
     );
     // console.log(prettyDOM(day));
@@ -150,24 +146,24 @@ describe("Application", () => {
   })
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
-        axios.delete.mockRejectedValueOnce();
+    axios.delete.mockRejectedValueOnce();
 
-        // Render the Application.
-        const { container, debug } = render(<Application />);
-        // Wait until the text "Archie Cohen" is displayed.
-        await waitForElement(() => getByText(container, "Archie Cohen"));
-    
-        // Locate the first appointment (Archie Cohen)
-        const appointment = getAllByTestId(container,"appointment")[1];
-        // Click the "Delete button" for this appointment
-        fireEvent.click(getByAltText(appointment, "Delete"))
-        // Check for confirmation state
-        expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
-        // Click confirm from confirmation
-        fireEvent.click(getByText((container),"Confirm"))
-        // Check to see if state has changed to Deleting (element text: "Deleting")
-        expect(getByText(container, "Deleting")).toBeInTheDocument();
-        // Wait until the error state is displayed
-        await waitForElement(() => getByAltText(container, "Close"));
+    // Render the Application.
+    const { container, debug } = render(<Application />);
+    // Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // Locate the first appointment (Archie Cohen)
+    const appointment = getAllByTestId(container,"appointment")[1];
+    // Click the "Delete button" for this appointment
+    fireEvent.click(getByAltText(appointment, "Delete"))
+    // Check for confirmation state
+    expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
+    // Click confirm from confirmation
+    fireEvent.click(getByText((container),"Confirm"))
+    // Check to see if state has changed to Deleting (element text: "Deleting")
+    expect(getByText(container, "Deleting")).toBeInTheDocument();
+    // Wait until the error state is displayed
+    await waitForElement(() => getByAltText(container, "Close"));
   })
 });
