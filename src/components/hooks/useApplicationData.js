@@ -11,6 +11,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
+  // Axios get requests to retrieve setState information used: days, appointments, interviewers.
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
@@ -51,7 +52,7 @@ export default function useApplicationData() {
       });
   }
 
-  // Delete request to the API server and update state to reflect the removed appointment. 
+  // Delete request to the API server and update state to reflect the removed appointment.
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],

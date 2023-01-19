@@ -29,7 +29,7 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  // Create interview object
+  // Create interview object and submit axios put request. Displays SAVING mode until the axios request resolves then calls transition to SHOW on res or ERROR_SAVE on err. 
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -44,7 +44,7 @@ export default function Appointment(props) {
       .catch((err) => transition(ERROR_SAVE, true));
   }
 
-  // Remove interview object
+// Submit axios delete request. Displays REMOVING mode until the axios request resolves then calls transition to EMPTY on res or ERROR_DELETE on err. 
   function remove() {
     const interview = null;
 

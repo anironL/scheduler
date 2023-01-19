@@ -16,8 +16,10 @@ export default function Application(props) {
   // Import useApplicationData custom hook
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
-
+  
+  // Retrieve interviewers array of objects (keys: id, name, avatar) to pass down to <Appointment />.
   const interviewers = getInterviewersForDay(state, state.day);
+  // Retrieve appointments array for the specified day and render.
   const appointments = getAppointmentsForDay(state, state.day).map(
     (appointment) => {
       return (

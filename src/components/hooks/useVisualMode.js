@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
-  
+
   // Change mode and add to history state array by default. Replaces final element in History array if replace is set to = true.
   const transition = (newMode, replace = false) => {
     setMode(newMode);
@@ -21,9 +21,9 @@ export default function useVisualMode(initial) {
     if (history.length < 3) {
       setMode(history[0]);
     } else {
-      const newHistory = [...history].slice(0,history.length-1);
+      const newHistory = [...history].slice(0, history.length - 1);
       setMode(history[history.length - 2]);
-      setHistory(newHistory)
+      setHistory(newHistory);
     }
   };
 

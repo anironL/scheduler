@@ -24,7 +24,7 @@ export function getInterview(state, interview) {
   };
 }
 
-// Return array of interviewerIds for the provided day.
+// Return array of interviewer objects (keys: id, name, avatar) for the provided day.
 export function getInterviewersForDay(state, day) {
   if (day === null) {
     return [];
