@@ -19,14 +19,12 @@ export default function useVisualMode(initial) {
 
   // Move back 2 spaces in history state; used when cancelling from Error.js
   const back = () => {
-    if (history.length < 3) {
+    if (history.length < 2) {
       setMode(history[0]);
     } else {
-      setMode(history[history.length - 2]);
-      setHistory((prevHistory) => {
-        prevHistory.pop();
-        return prevHistory;
-      });
+      history.pop();
+      setMode(history[history.length - 1]);
+      setHistory(...history);
     }
   };
 
