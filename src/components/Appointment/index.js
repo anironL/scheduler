@@ -48,15 +48,13 @@ export default function Appointment(props) {
   function remove() {
     const interview = null;
 
-    transition(REMOVING, true);
+    transition(REMOVING);
 
     props
       .cancelInterview(props.id, interview)
       .then((res) => transition(EMPTY))
       .catch((err) => transition(ERROR_DELETE, true));
   }
-
-  console.log(props)
 
   return (
     <article className="appointment" data-testid="appointment">
@@ -91,7 +89,7 @@ export default function Appointment(props) {
       )}
       {mode === SAVING && <Status message="Saving" />}
       {mode === ERROR_SAVE && (
-        <Error message="Error saving" onClick={() => back()} />
+        <Error message="Error saving" onClick={back} />
       )}
       {mode === CANCELLING && (
         <Confirm
@@ -102,7 +100,7 @@ export default function Appointment(props) {
       )}
       {mode === REMOVING && <Status message="Deleting" />}
       {mode === ERROR_DELETE && (
-        <Error message="Error deleting" onClick={() => back()} />
+        <Error message="Error deleting" onClick={back} />
       )}
 
       <hr className="appointment__separator" />

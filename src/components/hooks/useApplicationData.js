@@ -29,7 +29,7 @@ export default function useApplicationData() {
   // Set the current day state.
   const setDay = (day) => setState({ ...state, day });
 
-  // Makes an HTTP request and updates the local state.
+  // Put request to the API server and update the state to reflect the booked appointment.
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -51,7 +51,7 @@ export default function useApplicationData() {
       });
   }
 
-  // Make an HTTP request and updates the local state.
+  // Delete request to the API server and update state to reflect the removed appointment. 
   function cancelInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -71,6 +71,7 @@ export default function useApplicationData() {
     });
   }
 
+  // Find the amount of null interview values for all appointments[e of state.days].interview keys. This sum is returned within an object and later used to setState (see: bookInterview & cancelInterview)
   function updateSpots(apptID, appointments) {
     let newDays = [...state.days];
     let dayID = newDays.findIndex((id) => id.appointments.includes(apptID));
